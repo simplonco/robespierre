@@ -6,3 +6,5 @@ CONSUMER_SECRET=<valeur>
 ACCESS_TOKEN=<valeur>
 ACCESS_TOKEN_SECRET=<valeur>
 ```
+
+La synthèse vocale utilise le paquet `festival`.

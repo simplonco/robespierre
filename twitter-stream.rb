@@ -12,5 +12,5 @@ client = Twitter::Streaming::Client.new do |config|
 end
 
 client.sample do |object|
-  puts object.text if object.is_a?(Twitter::Tweet)
+  `echo #{object.text} | festival --tts` if object.is_a?(Twitter::Tweet)
 end
