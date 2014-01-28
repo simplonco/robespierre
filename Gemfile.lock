@@ -17,9 +17,17 @@ GEM
       thread_safe (~> 0.1.3)
     multipart-post (2.0.0)
     naught (1.0.0)
+    rack (1.5.2)
+    rack-protection (1.5.2)
+      rack
     simple_oauth (0.2.0)
+    sinatra (1.4.4)
+      rack (~> 1.4)
+      rack-protection (~> 1.4)
+      tilt (~> 1.3, >= 1.3.4)
     thread_safe (0.1.3)
       atomic
+    tilt (1.4.1)
     twitter (5.6.0)
       addressable (~> 2.3)
       buftok (~> 0.2.0)
@@ -38,4 +46,5 @@ PLATFORMS
 
 DEPENDENCIES
   dotenv
+  sinatra
   twitter
