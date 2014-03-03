@@ -1,2 +1,2 @@
-require "./twitter-stream"
+require "./app"
 run Sinatra::Application

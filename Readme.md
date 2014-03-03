@@ -1,3 +1,5 @@
+<!-- #Rajouté avec l'appli d'Audrey -->
+
 Pour configurer le client Twitter, créer un fichier `.env` à la racine de l'appli en renseignant ces variables.
 
 ```

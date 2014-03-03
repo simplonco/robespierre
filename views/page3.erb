@@ -1,0 +1,51 @@
+<div class="col-md-3">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h3 class="panel-title">Tweets</h3>
+		</div>
+		<form id="search_form" class="form-horizontal" role="form" method="post" action="/3">
+			<div class="form-group">
+				<label for="input" class="col-sm-3 control-label">Search</label>
+				<div class="col-sm-8 ">
+					<input name="input" type="text" class="form-control" id="input" placeholder="hashtag">
+				</div>
+			</div>
+		</form>
+		<div id="conteneur" class="panel-body">
+			<form method="post" action="/">
+				<% @search.collect do |tweet| %>
+				<p>
+					<input type="checkbox" name="tweet[]" id="tweet" value="<%= tweet.text %>"/> 
+					<img src= '<%= tweet.user.profile_image_url %>', alt="profile_pic", title="profile_pic">
+					<i id="user_name"><%= tweet.user.screen_name %></i>:
+					<label for="tweet"> <%= tweet.text %> </label>
+				</p>
+				<% end %>
+			</div> <!--ferme le 1er panel body -->
+			<div class="panel-body"><!--2ème panel-body-->
+				<input id="envoyer" class="btn btn-default" type="submit" value="Envoyer" />
+			</form>
+			<form class="inline_button" method="post" action="/">
+				<input id="envoyer" class="btn btn-default" type="submit" value="Switch" />
+			</form>
+
+			<!-- modal button -->
+			<button class="inline_button btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg">Twitter</button>
+			<!-- large modal -->
+			<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+				<div class="modal-dialog modal-lg">
+					<div id="modal_content" class="modal-content">
+						<form role="form" method="post" action="/4" >
+							<div class="form-group">
+								<label id="label_tweet" for="type_a_tweet">Ecrivez un Tweet :</label>
+								<input type="text" name="input" class="form-control" id="type_a_tweet" placeholder="Your Tweet...">
+							</div>
+							<input id="envoyer" class="btn btn-primary" type="submit" value="Envoyer" />
+						</form>
+					</div>
+				</div>
+			</div>
+
+		</div><!-- ferme le 2ème panel-body -->
+	</div><!--ferme le panel-->
+</div><!--ferme le col-md-3-->
