@@ -1,10 +1,28 @@
 <div class="col-md-3">
 	<div class="panel panel-success">
 		<div class="panel-heading">
-			<h3 class="panel-title">Playlist</h3>
+			<h3 class="panel-title">Player</h3>
 		</div>
 		<div class="panel-body">
 
+			<object type="application/x-shockwave-flash" data="dewplayer-multi.swf" width="240" height="20" id="dewplayer" name="dewplayer"> 
+				<param name="wmode" value="transparent" />
+				<param name="movie" value="dewplayer-multi.swf" /> 
+				<param name="flashvars" value="mp3=<%=session[:track]%>" /> 
+			</object>
+
+			<form method="post" action="/6">
+				<ul id="sortable">
+					<li class="ui-state-default"><input type="checkbox" name="track[]" id="" value="test1.mp3"/>Item 1</li>
+					<li class="ui-state-default"><input type="checkbox" name="track[]" id="" value="test2.mp3"/>Item 2</li>
+					<li class="ui-state-default"><input type="checkbox" name="track[]" id="" value="test3.mp3"/>Item 3</li>	
+				</ul>
+
 		</div>
+				<div class="panel-footer">
+					<input id="envoyer" class="btn btn-default" type="submit" value="Envoyer" />
+				</div>
+			</form>
+
 	</div>
 </div>

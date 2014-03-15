@@ -7,6 +7,11 @@ require 'dotenv'
 Dotenv.load
 require 'twitter'
 
+#pour faire fonctionner jquery-ui
+require 'coffee-rails'
+
+require 'serialport' #sert quand on veut parler directement au arduino sans passer par firmata
+require 'arduino_firmata'
 
 client = Twitter::REST::Client.new do |config|
 	config.consumer_key        = ENV['CONSUMER_KEY']
@@ -15,27 +20,18 @@ client = Twitter::REST::Client.new do |config|
 	config.access_token_secret = ENV['ACCESS_TOKEN_SECRET']
 end
 
+enable :sessions #permet de stocker une variable dans une session et de pouvoir l'utiliser partout dans l'app
 
 get '/' do
 	@user_mentions  = client.mentions_timeline
-
 	erb :index
 end
 
-post '/' do #avec espeak
-	@tweets = "#{params[:tweet]}"
-	`espeak -v fr '#{params[:input]}'`
+post '/' do #avec tts
+	"#{params[:input]}".to_file "fr", "public/#{params[:input]}.mp3"
+	
 	redirect to ('/')
-end
-
-get '/1' do
-	erb :page1
-end
-
-post '/1' do #avec tts
-	"#{params[:input]}".to_file "fr", 'input.mp3'
-	`cvlc --play-and-exit "input.mp3" && rm input.mp3`
-	redirect to ('/1')
+	#{}`cvlc --play-and-exit "input.mp3" && rm input.mp3`
 end
 
 get '/2' do
@@ -47,12 +43,31 @@ post '/2' do
 	redirect to ('/2')
 end
 
-post '/3' do
+post '/search' do #pour chercher un mot o ou hashtag sur twitter 
 	@search = client.search("#{params[:input]}")
-	erb :page3
+	erb :search_page
 end
 
-post '/4' do
+post '/update_statut' do #pour poster un tweet
 	client.update("#{params[:input]}")
 	redirect to ('/2')
+end
+
+post '/5' do #envoie vers le player
+	redirect to ('/')
+end
+
+post '/6' do #envoie les morceaux de la playlist au player
+	session[:track] = "#{params[:track]}"
+	session[:track].gsub!(/"/, '')
+	session[:track].gsub!(/\[/, '')
+	session[:track].gsub!(/\]/, '')
+	session[:track].gsub!(/,/, '|')
+
+	redirect to ('/2')
+end
+
+post '/arduino' do
+	arduino_controller = ArduinoControl.new(" blabla")
+	arduino_controller.blink_ten_times(1.0)
 end

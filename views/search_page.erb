@@ -3,7 +3,7 @@
 		<div class="panel-heading">
 			<h3 class="panel-title">Tweets</h3>
 		</div>
-		<form id="search_form" class="form-horizontal" role="form" method="post" action="/3">
+		<form id="search_form" class="form-horizontal" role="form" method="post" action="/search">
 			<div class="form-group">
 				<label for="input" class="col-sm-3 control-label">Search</label>
 				<div class="col-sm-8 ">
@@ -25,7 +25,7 @@
 			<div class="panel-body"><!--2ème panel-body-->
 				<input id="envoyer" class="btn btn-default" type="submit" value="Envoyer" />
 			</form>
-			<form class="inline_button" method="post" action="/">
+			<form class="inline_button" method="post" action="/5">
 				<input id="envoyer" class="btn btn-default" type="submit" value="Switch" />
 			</form>
 
@@ -35,7 +35,7 @@
 			<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
 				<div class="modal-dialog modal-lg">
 					<div id="modal_content" class="modal-content">
-						<form role="form" method="post" action="/4" >
+						<form role="form" method="post" action="update_statut" >
 							<div class="form-group">
 								<label id="label_tweet" for="type_a_tweet">Ecrivez un Tweet :</label>
 								<input type="text" name="input" class="form-control" id="type_a_tweet" placeholder="Your Tweet...">

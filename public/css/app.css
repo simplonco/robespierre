@@ -51,3 +51,7 @@ overflow: auto;
 #modal_content {
 	padding: 15px;
 }
+
+#sortable {
+	list-style-type: none;
+}
