@@ -1,0 +1,57 @@
+/* Positionne la photo en arrière plan */
+body {
+	background: url(../studio.jpg) no-repeat center center fixed; 
+  	 -webkit-background-size: cover;
+     	-moz-background-size: cover;
+       	  -o-background-size: cover;
+             background-size: cover;
+}
+
+#header {
+	margin-top: 25px;
+	margin-bottom: 25px;
+}
+
+#robespierre {
+position: absolute 0px; 0px;
+}
+
+#titre {
+	text-align: center;
+	color: white;
+}
+
+#user_name {
+	text-decoration: underline;
+}
+
+/* Aligne le Search dans la colonne Tweet */ 
+#search_form {
+	margin-top: 10px;
+	margin-left: 14px;
+}
+
+/* Crée la scrollbar de la colonne Tweet */
+#conteneur{
+max-height: 346px;
+overflow: auto;
+}
+
+/* aligne les bouttons en dessous de la colonne Tweets */
+.inline_button {
+	display: inline;
+}
+
+/* Font-size de l'entête de la modal */
+#label_tweet {
+	font-size: 18px;
+}
+
+/* Met en forme le contenu de la modal */
+#modal_content {
+	padding: 15px;
+}
+
+#sortable {
+	list-style-type: none;
+}
