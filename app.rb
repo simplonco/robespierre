@@ -58,12 +58,7 @@ post '/5' do #envoie vers le player
 end
 
 post '/6' do #envoie les morceaux de la playlist au player
-	session[:track] = "#{params[:track]}"
-	session[:track].gsub!(/"/, '')
-	session[:track].gsub!(/\[/, '')
-	session[:track].gsub!(/\]/, '')
-	session[:track].gsub!(/,/, '|')
-
+	session[:track] = params[:track].gsub(/"\[\]/, '').gsub(',', '|')
 	redirect to ('/2')
 end
 
