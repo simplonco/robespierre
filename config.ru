@@ -1,3 +1,4 @@
 require "./app"
-require "./lightled"
 run Sinatra::Application
+require "rubygems"
+require "./lightled"

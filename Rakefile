@@ -1,4 +1,4 @@
-#rajouté avec l'appli d'Audrey
-
 require "rubygems"
 require "rake"
+require 'sinatra/activerecord/rake'
+require './app'

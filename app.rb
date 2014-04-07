@@ -1,17 +1,9 @@
-# app.rb
+require 'bundler'
+Bundler.require
 require 'sinatra'
-require 'tts'
-require 'pry'
-require 'pry-debugger'
-require 'dotenv'
 Dotenv.load
-require 'twitter'
 
-#pour faire fonctionner jquery-ui
-require 'coffee-rails'
-
-require 'serialport' #sert quand on veut parler directement au arduino sans passer par firmata
-require 'arduino_firmata'
+set :database, "sqlite3:///foo.sqlite3"
 
 client = Twitter::REST::Client.new do |config|
 	config.consumer_key        = ENV['CONSUMER_KEY']
