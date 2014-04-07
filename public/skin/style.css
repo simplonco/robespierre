@@ -1,0 +1,7 @@
+/*style.css*/
+
+/*Permet de camoufler le lecteur vidéo*/
+div.jp-jplayer {
+	width: 0px !important;
+	height: 0px !important;
+	}
