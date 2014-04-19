@@ -1,6 +1,4 @@
-<!-- A mettre en bas du layout -->
 <% @tracks_order = Track.order("position") %>
-
 
 <script type="text/javascript">
 $(document).ready(function(){
@@ -15,7 +13,6 @@ $(document).ready(function(){
 		mp3:"<%=track.lien%>",
 	},
 	<% end %>
-
 	], {
 		playlistOptions: {
 			enableRemoveControls: true
@@ -25,13 +22,15 @@ $(document).ready(function(){
 		smoothPlayBar: true,
 		keyEnabled: true,
 		audioFullScreen: true
+		// shuffleOnLoop: false
+
 	});
 
 });
+
 </script>
 
 <div class="col-md-3">
-	<!-- A mettre dans la page html -->
 	<div id="jp_container_N" class="jp-video jp-video-270p" >
 		<div class="jp-type-playlist">
 			<div id="jquery_jplayer_N" class="jp-jplayer" ></div>
@@ -59,18 +58,8 @@ $(document).ready(function(){
 							<li><a href="javascript:;" class="jp-pause" tabindex="1">pause</a></li>
 							<li><a href="javascript:;" class="jp-next" tabindex="1">next</a></li>
 							<li><a href="javascript:;" class="jp-stop" tabindex="1">stop</a></li>
-							<li><a href="javascript:;" class="jp-mute" tabindex="1" title="mute">mute</a></li>
-							<li><a href="javascript:;" class="jp-unmute" tabindex="1" title="unmute">unmute</a></li>
-							<li><a href="javascript:;" class="jp-volume-max" tabindex="1" title="max volume">max volume</a></li>
 						</ul>
-						<div class="jp-volume-bar">
-							<div class="jp-volume-bar-value"></div>
-						</div>
 						<ul class="jp-toggles">
-							<li><a href="javascript:;" class="jp-full-screen" tabindex="1" title="full screen">full screen</a></li>
-							<li><a href="javascript:;" class="jp-restore-screen" tabindex="1" title="restore screen">restore screen</a></li>
-							<li><a href="javascript:;" class="jp-shuffle" tabindex="1" title="shuffle">shuffle</a></li>
-							<li><a href="javascript:;" class="jp-shuffle-off" tabindex="1" title="shuffle off">shuffle off</a></li>
 							<li><a href="javascript:;" class="jp-repeat" tabindex="1" title="repeat">repeat</a></li>
 							<li><a href="javascript:;" class="jp-repeat-off" tabindex="1" title="repeat off">repeat off</a></li>
 						</ul>
@@ -79,7 +68,6 @@ $(document).ready(function(){
 			</div>
 			<div class="jp-playlist">
 				<ul id="tracks" data-update-url="/sort_url">
-					<!-- The method Playlist.displayPlaylist() uses this unordered list -->
 					<li id="track_123>"></li>
 				</ul>
 			</div>
@@ -88,5 +76,17 @@ $(document).ready(function(){
 				To play the media you will need to either update your browser to a recent version or update your <a href="http://get.adobe.com/flashplayer/" target="_blank">Flash plugin</a>.
 			</div>
 		</div>
+	</div>
+
+	<div class="panel">
+		<ul id="my-tracks" class="my-playlist">
+			<% @tracks_order.each do |track| %>
+				<li>
+					<input type="checkbox" class="to-my-playlist"/>
+					<span class="my-song" data-lien="<%= track.lien %>"><%= track.title %></span>
+					<a href="#" class="remove-my-song">x</a>
+				</li>
+			<% end %>
+		</ul>
 	</div>
 </div>

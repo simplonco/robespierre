@@ -13,26 +13,29 @@ client = Twitter::REST::Client.new do |config|
 end
 
 class Track < ActiveRecord::Base
+	def self.destroy_from_title(title)
+		# TODO destroy mp3 file
+		#regarder les fileutils ruby
+		Track.find_by_title(title).destroy
+	end
 end
 
 enable :sessions #permet de stocker une variable dans une session et de pouvoir l'utiliser partout dans l'app
 
-helpers do #regarder comment créer un helper sur sinatra
-	def foo
-		"foo"
-	end
-end
-
 get '/' do
 	@user_mentions  = client.mentions_timeline
 	erb :index
-	# binding.pry
 end
 
-post '/' do #avec tts
-	"#{params[:input]}".to_file "fr", "public/#{params[:input]}.mp3"
+post '/' do #avec tts	
+	"#{params[:input]}".to_file "fr", "public/tracks/#{params[:input]}.mp3"
+	input = params[:input]
+	input = input.gsub(/@/, "").gsub(/\?/, "")
+	new_track = Track.new
+	new_track.title = input
+	new_track.lien = "../tracks/#{input}.mp3"
+	new_track.save
 	redirect to ('/')
-	#{}`cvlc --play-and-exit "input.mp3" && rm input.mp3`
 end
 
 get '/2' do
@@ -44,7 +47,7 @@ post '/2' do
 	redirect to ('/2')
 end
 
-post '/search' do #pour chercher un mot o ou hashtag sur twitter
+post '/search' do #pour chercher un mot ou hashtag sur twitter
 	@search = client.search("#{params[:input]}")
 	erb :search_page
 end
@@ -54,25 +57,28 @@ post '/update_statut' do #pour poster un tweet
 	redirect to ('/2')
 end
 
-post '/5' do #envoie vers le player
-	redirect to ('/')
-end
-
-# post '/6' do #envoie les morceaux de la playlist au player
-# 	session[:track] = params[:track].gsub(/"\[\]/, '').gsub(',', '|')
-# 	redirect to ('/2')
-# end
-
-post '/arduino' do
-	arduino_controller = ArduinoControl.new(" blabla")
-	arduino_controller.blink_ten_times(1.0)
-end
-
 post '/sort_url' do
-	params[:tracks].each_with_index do |track_name, index|
+	params[:tracks].each do |track|
+		index = track[0].to_i
+		track_name = track[1][:title]
 		Track.update_all({position: index+1}, {title: track_name})
 	end
 	Track.order("position").map do |track|
 		{title: track.title, mp3: track.lien}
 	end.to_json
 end
+
+post '/arduino' do
+	arduino_controller = ArduinoControl.new(" blabla")
+	arduino_controller.blink_ten_times(1.0)
+end
+
+post '/remove_track' do
+	Track.destroy_from_title(params[:name])
+end
+
+
+# topics = ["#track1", "#track2", "#track3"]
+# 	client.filter(:track => topics.join(",")) do |object|
+# 	puts "@#{object.user.screen_name} #{obect.text}" if object.is_a?(Twitter::Tweet)
+# end

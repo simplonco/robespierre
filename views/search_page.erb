@@ -20,12 +20,13 @@
 					<i id="user_name"><%= tweet.user.screen_name %></i>:
 					<label for="tweet"> <%= tweet.text %> </label>
 				</p>
+				<hr class="hr" />
 				<% end %>
 			</div> <!--ferme le 1er panel body -->
 			<div class="panel-body"><!--2ème panel-body-->
 				<input id="envoyer" class="btn btn-default" type="submit" value="Envoyer" />
 			</form>
-			<form class="inline_button" method="post" action="/5">
+			<form class="inline_button" method="get" action="/">
 				<input id="envoyer" class="btn btn-default" type="submit" value="Switch" />
 			</form>
 

@@ -37,7 +37,7 @@ div.jp-audio-stream {
 	width:182px;
 }
 div.jp-video-270p {
-	width:480px;
+	width:280px;
 }
 div.jp-video-360p {
 	width:640px;
@@ -102,7 +102,7 @@ div.jp-video div.jp-interface {
 
 div.jp-controls-holder {
 	clear: both;
-	width:440px;
+	width:277px;
 	margin:0 auto;
 	position: relative;
 	overflow:hidden;
@@ -133,7 +133,7 @@ div.jp-video div.jp-type-single ul.jp-controls {
 
 div.jp-video div.jp-type-playlist ul.jp-controls {
 	width: 134px;
-	margin-left: 172px;
+	margin-left: 72px;
 }
 div.jp-video ul.jp-controls,
 div.jp-interface ul.jp-controls li {
@@ -544,7 +544,7 @@ div.jp-audio .jp-type-playlist ul.jp-toggles {
 
 div.jp-video ul.jp-toggles {
 	margin-top:10px;
-	width:100px;
+	width:25px;
 }
 
 ul.jp-toggles li {

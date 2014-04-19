@@ -1,28 +1,89 @@
+@font-face {
+    font-family: "BrannbollFet";
+    src: url('../font/BrannbollFet.ttf');
+}
+
+@font-face {
+    font-family: "BrannbollSmal";
+    font-family: "USN_Stencil";
+    font-weight: bold;
+    src: url('../font/BrannbollSmal.ttf');
+    src: url('../font/USN_Stencil.ttf' );
+}
+
 /* Positionne la photo en arrière plan */
 body {
-	background: url(../studio.jpg) no-repeat center center fixed; 
+	background: url(../studioB&W.jpg) no-repeat center center fixed; 
   	 -webkit-background-size: cover;
      	-moz-background-size: cover;
        	  -o-background-size: cover;
              background-size: cover;
 }
 
+.hr {
+	margin-left: -20px;
+	margin-right: -20px;
+	margin-bottom: 8px; 
+	margin-top: -7px;
+	padding-left: -20px;
+	padding-right: -20px;
+	border-color: #B9B9B9 !important;
+}
+
 #header {
+	margin-top: 0px !important;
+	background-color: #F3F2D4; 
 	margin-top: 25px;
 	margin-bottom: 25px;
 }
 
 #robespierre {
-position: absolute 0px; 0px;
+position: absolute 0px 0px;
 }
 
 #titre {
 	text-align: center;
-	color: white;
+	font-family: "USN_Stencil", Helvetica, Arial, sans-serif;
+	color: #C30140;
+}
+
+#titre h1 {
+	font-size: 44px !important;
+}
+
+#hr_titre {
+	margin-left: -20px;
+	margin-right: -20px;
+	margin-top: -3px;
+	padding-left: -20px;
+	padding-right: -20px;
+	border-color: black !important;
 }
 
 #user_name {
 	text-decoration: underline;
+}
+
+.panel {
+	border-top-left-radius: 20px !important; 
+	border-top-right-radius: 0px !important;
+	border-bottom-right-radius: 0px !important;  
+	border-bottom-left-radius: 0px !important;
+	background-color: #F3F2D4;
+}
+
+.panel-heading {
+	border-top-left-radius: 20px !important;
+	background-color: #73713D !important;
+}
+
+.panel-body {
+	background-color: #F3F2D4;
+}
+
+h3 {
+	font-family: "BrannbollFet", Helvetica, Arial, sans-serif;
+	color: #F3F2D4 !important;
 }
 
 /* Aligne le Search dans la colonne Tweet */ 
@@ -33,9 +94,10 @@ position: absolute 0px; 0px;
 
 /* Crée la scrollbar de la colonne Tweet */
 #conteneur{
-max-height: 346px;
-overflow: auto;
+	max-height: 346px;
+	overflow: auto;
 }
+
 
 /* aligne les bouttons en dessous de la colonne Tweets */
 .inline_button {

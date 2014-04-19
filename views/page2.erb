@@ -1,5 +1,5 @@
 <div class="col-md-3">
-	<div class="panel panel-success">
+	<div class="panel panel-default">
 		<div class="panel-heading">
 			<h3 class="panel-title">Tweets</h3>
 		</div>
@@ -15,17 +15,18 @@
 			<form method="post" action="/">
 				<% @user_timeline.each do |tweet| %>
 				<p>
-					<input type="checkbox" name="tweet[]" id="tweet" value="<%= tweet.text %>"/> 
+					<input type="checkbox" name="input" id="tweet" value="<%= tweet.text %>"/> 
 					<img src= '<%= tweet.user.profile_image_url %>', alt="profile_pic", title="profile_pic">
 					<i id="user_name"><%= tweet.user.screen_name %></i>:
 					<label for="tweet"> <%= tweet.text %> </label>
 				</p>
+				<hr class="hr" />
 				<% end %>
 			</div> <!--ferme le 1er panel body -->
 			<div class="panel-body"><!--2ème panel-body-->
 				<input id="envoyer" class="btn btn-default" type="submit" value="Envoyer" />
 			</form>
-			<form class="inline_button" method="post" action="/5">
+			<form class="inline_button" method="get" action="/">
 				<input id="envoyer" class="btn btn-default" type="submit" value="Switch" />
 			</form>
 
