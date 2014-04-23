@@ -2,6 +2,7 @@ require 'bundler'
 Bundler.require
 require 'sinatra'
 Dotenv.load
+require './vote'
 
 set :database, "sqlite3:///foo.sqlite3"
 
@@ -78,8 +79,10 @@ post '/remove_track' do
 	Track.destroy_from_title(params[:name])
 end
 
-# Code de Alix. La méthode .filter fonctionne uniquement pour l'API Streaming
 # topics = ["#track1", "#track2", "#track3"]
 # 	client.filter(:track => topics.join(",")) do |object|
 # 	puts "@#{object.user.screen_name} #{object.text}" if object.is_a?(Twitter::Tweet)
 # end
+
+#Système de vote
+#table vote_choices{name: , compteur: }

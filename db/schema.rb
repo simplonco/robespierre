@@ -10,12 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140407120619) do
+ActiveRecord::Schema.define(version: 20140423092639) do
 
   create_table "tracks", force: true do |t|
     t.string  "title"
     t.string  "lien"
     t.integer "position"
+  end
+
+  create_table "votes", force: true do |t|
+    t.string  "name"
+    t.integer "counter"
   end
 
 end
