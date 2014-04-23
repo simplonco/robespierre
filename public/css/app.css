@@ -86,6 +86,10 @@ h3 {
 	color: #F3F2D4 !important;
 }
 
+#tts_text_area {
+	max-height: 230px;
+}
+
 /* Aligne le Search dans la colonne Tweet */ 
 #search_form {
 	margin-top: 10px;
@@ -94,7 +98,7 @@ h3 {
 
 /* Crée la scrollbar de la colonne Tweet */
 #conteneur{
-	max-height: 346px;
+	max-height: 200px;
 	overflow: auto;
 }
 
@@ -114,6 +118,18 @@ h3 {
 	padding: 15px;
 }
 
+	/*Pour cacher la playlist JPlayer*/
+.jp-playlist {
+	display: none;
+}
+
 #sortable {
 	list-style-type: none;
+}
+
+#playlist {
+	background-color: #F3F2D4;
+	width: 279px;
+	max-height: 293px;
+	overflow: auto;
 }

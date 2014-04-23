@@ -14,6 +14,7 @@ end
 
 class Track < ActiveRecord::Base
 	def self.destroy_from_title(title)
+		`rm ./public/tracks/#{title}.mp3`
 		# TODO destroy mp3 file
 		#regarder les fileutils ruby
 		Track.find_by_title(title).destroy
@@ -32,8 +33,8 @@ post '/' do #avec tts
 	input = params[:input]
 	input = input.gsub(/@/, "").gsub(/\?/, "")
 	new_track = Track.new
-	new_track.title = input
-	new_track.lien = "../tracks/#{input}.mp3"
+	new_track.title = input[0..57]
+	new_track.lien = "../tracks/#{input[0..57]}.mp3"
 	new_track.save
 	redirect to ('/')
 end
@@ -77,8 +78,8 @@ post '/remove_track' do
 	Track.destroy_from_title(params[:name])
 end
 
-
+# Code de Alix. La méthode .filter fonctionne uniquement pour l'API Streaming
 # topics = ["#track1", "#track2", "#track3"]
 # 	client.filter(:track => topics.join(",")) do |object|
-# 	puts "@#{object.user.screen_name} #{obect.text}" if object.is_a?(Twitter::Tweet)
+# 	puts "@#{object.user.screen_name} #{object.text}" if object.is_a?(Twitter::Tweet)
 # end
