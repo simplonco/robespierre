@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<!-- <meta http-equiv="refresh" content="15" > Impossible de garder cette fonction en l'état car afficher la page /search prend beaucoup trop de temps -->
 	<title> Robi</title>
 	<link rel='stylesheet' href='http://getbootstrap.com/dist/css/bootstrap.min.css'>
 	<link rel='stylesheet' href='css/app.css'>
@@ -46,11 +47,6 @@
 			$.post('http://localhost:9393/remove_track', {name: name}, function() {console.log('ok destroy')})
 		})
 
-		rebuildPlaylist = function() {
-			console.log('rebuild the playlist')
-			myPlaylist.setPlaylist(getCurrentPlaylist())
-		}
-
 		getCurrentPlaylist = function() {
 			var data = []
 			$('.my-playlist .to-my-playlist:checked').each(function(){
@@ -58,6 +54,10 @@
 				data.push({title: $mySong.text(), mp3: $mySong.data('lien')})
 			})
 			return data
+		}
+		rebuildPlaylist = function() {
+			console.log('rebuild the playlist')
+			myPlaylist.setPlaylist(getCurrentPlaylist())
 		}
 
 		$("#my-tracks").sortable({
@@ -67,9 +67,7 @@
 				$('.my-playlist .my-song').each(function(){
 					tracks.push({title: $(this).text(), mp3: $(this).data('lien')})
 				})
-				console.log(tracks)
 				$.post('/sort_url', {'tracks': tracks}, function(data) {
-	            	console.log('ok, tri enregistré')
 	            	rebuildPlaylist()
 	            })
 			}
@@ -83,12 +81,13 @@
 			event.preventDefault()
 			var name = $(this).prev('.my-song').text()
 			if($(this).parent('li').find('.to-my-playlist').is(':checked')) { 
-				rebuildPlaylist()}
+				rebuildPlaylist()
 			$.post('http://localhost:9393/remove_track', {name: name}, function() {console.log('ok destroy')})
-			$(this).parent().remove()
+			$(this).parent().remove()}
 		})
 	});
 	</script>
+
 	<script type="text/javascript" src="/js/jquery.jplayer.min.js"></script>
 	<script type="text/javascript" src="/js/jplayer.playlist.min.js"></script>
 </body>

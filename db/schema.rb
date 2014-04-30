@@ -10,12 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140423092639) do
+ActiveRecord::Schema.define(version: 20140424124343) do
 
   create_table "tracks", force: true do |t|
     t.string  "title"
     t.string  "lien"
     t.integer "position"
+  end
+
+  create_table "tweets", force: true do |t|
+    t.string "author_name"
+    t.string "content"
+    t.string "profile_image_url"
+    t.time   "created_at"
   end
 
   create_table "votes", force: true do |t|

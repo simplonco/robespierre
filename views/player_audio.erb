@@ -31,62 +31,74 @@ $(document).ready(function(){
 </script>
 
 <div class="col-md-3">
-	<div id="jp_container_N" class="jp-video jp-video-270p" >
-		<div class="jp-type-playlist">
-			<div id="jquery_jplayer_N" class="jp-jplayer" ></div>
-			<div class="jp-gui">
-				<div class="jp-video-play">
-					<a href="javascript:;" class="jp-video-play-icon" tabindex="1">play</a>
-				</div>
-				<div class="jp-interface">
-					<div class="jp-progress">
-						<div class="jp-seek-bar">
-							<div class="jp-play-bar"></div>
+
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h3 class="panel-title">Player Audio</h3>
+		</div>
+
+
+
+		<div id="jp_container_N" class="jp-video jp-video-270p" >
+			<div class="jp-type-playlist">
+				<div id="jquery_jplayer_N" class="jp-jplayer" ></div>
+				<div class="jp-gui">
+					<div class="jp-video-play">
+						<a href="javascript:;" class="jp-video-play-icon" tabindex="1">play</a>
+					</div>
+					<div class="jp-interface">
+						<div class="jp-progress">
+							<div class="jp-seek-bar">
+								<div class="jp-play-bar"></div>
+							</div>
+						</div>
+						<div class="jp-current-time"></div>
+						<div class="jp-duration"></div>
+						<div class="jp-title">
+							<ul>
+								<li></li>
+							</ul>
+						</div>
+						<div class="jp-controls-holder">
+							<ul class="jp-controls">
+								<li><a href="javascript:;" class="jp-previous" tabindex="1">previous</a></li>
+								<li><a href="javascript:;" class="jp-play" tabindex="1">play</a></li>
+								<li><a href="javascript:;" class="jp-pause" tabindex="1">pause</a></li>
+								<li><a href="javascript:;" class="jp-next" tabindex="1">next</a></li>
+								<li><a href="javascript:;" class="jp-stop" tabindex="1">stop</a></li>
+							</ul>
+							<ul class="jp-toggles">
+								<li><a href="javascript:;" class="jp-repeat" tabindex="1" title="repeat">repeat</a></li>
+								<li><a href="javascript:;" class="jp-repeat-off" tabindex="1" title="repeat off">repeat off</a></li>
+							</ul>
 						</div>
 					</div>
-					<div class="jp-current-time"></div>
-					<div class="jp-duration"></div>
-					<div class="jp-title">
-						<ul>
-							<li></li>
-						</ul>
-					</div>
-					<div class="jp-controls-holder">
-						<ul class="jp-controls">
-							<li><a href="javascript:;" class="jp-previous" tabindex="1">previous</a></li>
-							<li><a href="javascript:;" class="jp-play" tabindex="1">play</a></li>
-							<li><a href="javascript:;" class="jp-pause" tabindex="1">pause</a></li>
-							<li><a href="javascript:;" class="jp-next" tabindex="1">next</a></li>
-							<li><a href="javascript:;" class="jp-stop" tabindex="1">stop</a></li>
-						</ul>
-						<ul class="jp-toggles">
-							<li><a href="javascript:;" class="jp-repeat" tabindex="1" title="repeat">repeat</a></li>
-							<li><a href="javascript:;" class="jp-repeat-off" tabindex="1" title="repeat off">repeat off</a></li>
-						</ul>
-					</div>
+				</div>
+				<div class="jp-playlist">
+					<ul id="tracks" data-update-url="/sort_url">
+						<li id="track_123>"></li>
+					</ul>
+				</div>
+				<div class="jp-no-solution">
+					<span>Update Required</span>
+					To play the media you will need to either update your browser to a recent version or update your <a href="http://get.adobe.com/flashplayer/" target="_blank">Flash plugin</a>.
 				</div>
 			</div>
-			<div class="jp-playlist">
-				<ul id="tracks" data-update-url="/sort_url">
-					<li id="track_123>"></li>
-				</ul>
-			</div>
-			<div class="jp-no-solution">
-				<span>Update Required</span>
-				To play the media you will need to either update your browser to a recent version or update your <a href="http://get.adobe.com/flashplayer/" target="_blank">Flash plugin</a>.
-			</div>
 		</div>
-	</div>
 
-	<div id="playlist">
-		<ul id="my-tracks" class="my-playlist">
-			<% @tracks_order.each do |track| %>
+		<div id="playlist">
+			<ul id="my-tracks" class="my-playlist">
+				<% @tracks_order.each do |track| %>
 				<li>
 					<input type="checkbox" class="to-my-playlist"/>
 					<span class="my-song" data-lien="<%= track.lien %>"><%= track.title %></span>
-					<a href="#" class="remove-my-song">x</a>
+					<a href="#" class="remove-my-song pull-right">x</a>
 				</li>
-			<% end %>
-		</ul>
+				<hr class="hr_track" />
+				<% end %>
+			</ul>
+		</div>
+
 	</div>
+
 </div>

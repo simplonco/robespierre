@@ -2,7 +2,9 @@ require 'bundler'
 Bundler.require
 require 'sinatra'
 Dotenv.load
-require './vote'
+require './model_vote'
+require './model_tweet'
+require './model_redis'
 
 set :database, "sqlite3:///foo.sqlite3"
 
@@ -25,29 +27,41 @@ end
 enable :sessions #permet de stocker une variable dans une session et de pouvoir l'utiliser partout dans l'app
 
 get '/' do
-	@user_mentions  = client.mentions_timeline
+	redis = Redis.new
+
+	@new_array = []
+
+	redis.keys("robonova:tweet:*").each do |x|
+		@new_array.push(JSON.parse(redis.get(x)))
+	end
 	erb :index
 end
 
 post '/' do #avec tts	
-	"#{params[:input]}".to_file "fr", "public/tracks/#{params[:input]}.mp3"
 	input = params[:input]
-	input = input.gsub(/@/, "").gsub(/\?/, "")
-	new_track = Track.new
-	new_track.title = input[0..57]
-	new_track.lien = "../tracks/#{input[0..57]}.mp3"
-	new_track.save
+	input = input.gsub("&", "et ").
+	              gsub("@", "at ").
+	              gsub("#", "hachetague").
+	              gsub(/[$°_\"{}\]\[`~&+,:;=?@#|'<>.^*()%!-]/, "")
+	 if input.empty?
+	else
+		input.to_file "fr", "public/tracks/#{input[0..57]}.mp3"
+		new_track = Track.new
+		new_track.title = input[0..57]
+		new_track.lien = "../tracks/#{input[0..57]}.mp3"
+		new_track.save
+	end
 	redirect to ('/')
 end
 
-get '/2' do
-	@user_timeline = client.user_timeline
-	erb :page2
-end
+ get '/2' do
+ 	@user_timeline = client.user_timeline
+ 	erb :page2
+ end
 
-post '/2' do
-	redirect to ('/2')
-end
+ post '/2' do
+ 	redirect to ('/2')
+ end
 
 post '/search' do #pour chercher un mot ou hashtag sur twitter
 	@search = client.search("#{params[:input]}")
@@ -79,10 +93,12 @@ post '/remove_track' do
 	Track.destroy_from_title(params[:name])
 end
 
-# topics = ["#track1", "#track2", "#track3"]
-# 	client.filter(:track => topics.join(",")) do |object|
-# 	puts "@#{object.user.screen_name} #{object.text}" if object.is_a?(Twitter::Tweet)
-# end
+post '/demarrer_vote' do
+	`nohup ruby systeme_de_vote.rb &`
+	erb :index	
+end
 
-#Système de vote
-#table vote_choices{name: , compteur: }
+post '/arreter_vote' do 
+end
+
+#gem forman

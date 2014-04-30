@@ -1,0 +1,47 @@
+<div class="col-md-3">
+	<div class="stronganel panel-default">
+		<div class="panel-heading">
+			<h3 class="panel-title">Votes</h3>
+		</div>
+		<div id="conteneur_vote" class="panel-body">
+			<div id="colonne_vote_1" class="colonne col-md-6">
+				<p class="tableau_votes titre_colonnes">Morceaux</p>
+				<hr class="hr_titre_vote">
+				<div class="tableau_votes">
+					<%= Vote.find_by_id("167").name %>
+				</div>
+				<hr class="hr_vote">
+				<div class="tableau_votes">
+					<%= Vote.find_by_id("168").name %>
+				</div>
+				<hr class="hr_vote">
+				<div class="tableau_votes dernieres_div_tableau">
+					<%= Vote.find_by_id("169").name %>
+				</div>
+			</div>
+			<div class="colonne col-md-6">
+				<p class="tableau_votes titre_colonnes">Compteur</p>
+				<hr class="hr_titre_vote">
+				<div class="tableau_votes">
+					<%= Vote.find_by_id("167").counter %>
+				</div>
+				<hr class="hr_vote">
+				<div class="tableau_votes">
+					<%= Vote.find_by_id("168").counter %>
+				</div>
+				<hr class="hr_vote">
+				<div class="tableau_votes dernieres_div_tableau">
+					<%= Vote.find_by_id("169").counter %>
+				</div>	
+			</div>
+		</div>
+		<div class="panel-body">
+			<form class="inline_button" method="post" action="/demarrer_vote">
+				<input id="Demarrer" class="btn btn-success" type="submit" value="Démarrer" />
+			</form>
+			<form class="inline_button" method="post" action="#">
+				<input id="Arreter" class="btn btn-danger" type="submit" value="Arrêter" />
+			</form>
+		</div>
+	</div>
+</div>

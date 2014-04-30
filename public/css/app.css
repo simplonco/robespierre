@@ -20,15 +20,6 @@ body {
              background-size: cover;
 }
 
-.hr {
-	margin-left: -20px;
-	margin-right: -20px;
-	margin-bottom: 8px; 
-	margin-top: -7px;
-	padding-left: -20px;
-	padding-right: -20px;
-	border-color: #B9B9B9 !important;
-}
 
 #header {
 	margin-top: 0px !important;
@@ -90,6 +81,10 @@ h3 {
 	max-height: 230px;
 }
 
+
+/*Tweets
+------*/
+
 /* Aligne le Search dans la colonne Tweet */ 
 #search_form {
 	margin-top: 10px;
@@ -97,11 +92,22 @@ h3 {
 }
 
 /* Crée la scrollbar de la colonne Tweet */
-#conteneur{
+#conteneur_tweet{
 	max-height: 200px;
+	padding-left: 20px;
+	padding-right: 20px;
 	overflow: auto;
 }
 
+.hr_tweet {
+	margin-left: -20px;
+	margin-right: -20px;
+	margin-bottom: 8px; 
+	margin-top: -7px;
+	padding-left: -20px;
+	padding-right: -20px;
+	border-color: #B9B9B9 !important;
+}
 
 /* aligne les bouttons en dessous de la colonne Tweets */
 .inline_button {
@@ -118,7 +124,11 @@ h3 {
 	padding: 15px;
 }
 
-	/*Pour cacher la playlist JPlayer*/
+
+/*Player-Audio
+------------*/
+
+/*Pour cacher la playlist JPlayer*/
 .jp-playlist {
 	display: none;
 }
@@ -129,7 +139,67 @@ h3 {
 
 #playlist {
 	background-color: #F3F2D4;
-	width: 279px;
-	max-height: 293px;
+	width: 261px;
+	max-height: 253px;
 	overflow: auto;
+	padding-bottom: 0px !important;
+}
+
+#my-tracks {
+	list-style-type: none;
+	margin-bottom: -7px;
+	padding-top: 7px;
+}
+
+.hr_track{
+	margin-left: -40px;
+	margin-bottom: 7px;
+	margin-top: 7px;
+	border-color: #B9B9B9 !important;
+}
+
+.remove-my-song {
+	padding-right: 20px;
+}
+
+
+/*Votes
+------*/
+
+#conteneur_vote {
+	padding: 0px;
+	border-bottom: 1px #B9B9B9 solid;
+}
+
+.titre_colonnes {
+	padding-top: 10px;
+	font-weight: bold;
+}
+
+#colonne_vote_1 {
+	border-right: 2px #B9B9B9 solid;
+}
+
+.hr_titre_vote{
+	margin-left: -15px;
+	margin-right: -15px;
+	margin-bottom: 7px;
+	margin-top: 7px;
+	border-color: #B9B9B9 !important;
+}
+
+.hr_vote{
+	margin-left: -15px;
+	margin-right: -15px;
+	margin-bottom: 7px;
+	margin-top: 7px;
+	border-color: #B9B9B9 !important;
+}
+
+.tableau_votes {
+	text-align: center;
+}
+
+.dernieres_div_tableau {
+	margin-bottom: 5px;
 }
