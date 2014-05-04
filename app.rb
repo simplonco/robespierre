@@ -37,13 +37,14 @@ get '/' do
 	erb :index
 end
 
-post '/' do #avec tts	
-	input = params[:input]
+post '/' do #avec tts
+	# binding.pry
+	input = params[:input] || params[:tweet].to_s
 	input = input.gsub("&", "et ").
-	              gsub("@", "at ").
-	              gsub("#", "hachetague").
-	              gsub(/[$°_\"{}\]\[`~&+,:;=?@#|'<>.^*()%!-]/, "")
-	 if input.empty?
+	gsub("@", "at ").
+	gsub("#", "hachetague").
+	gsub(/[$°_\"{}\]\[`~&+,:;=?@#|'<>.^*()%!-]/, "")
+	if input.empty?
 	else
 		input.to_file "fr", "public/tracks/#{input[0..57]}.mp3"
 		new_track = Track.new
@@ -54,14 +55,14 @@ post '/' do #avec tts
 	redirect to ('/')
 end
 
- get '/2' do
- 	@user_timeline = client.user_timeline
- 	erb :page2
- end
+get '/2' do
+	@user_timeline = client.user_timeline
+	erb :page2
+end
 
- post '/2' do
- 	redirect to ('/2')
- end
+post '/2' do
+	redirect to ('/2')
+end
 
 post '/search' do #pour chercher un mot ou hashtag sur twitter
 	@search = client.search("#{params[:input]}")
@@ -99,6 +100,11 @@ post '/demarrer_vote' do
 end
 
 post '/arreter_vote' do 
+end
+
+post '/Usain_Bolt' do
+	`ping wwww.faireusainbolt.com`
+	erb :index
 end
 
 #gem forman
