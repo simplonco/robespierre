@@ -1,14 +1,10 @@
 require 'twitter'
 require './model_vote'
 require 'sinatra/activerecord'
-require 'sqlite3'
+require 'redis'
 require 'dotenv'
 Dotenv.load
-
-ActiveRecord::Base.establish_connection(
-	:adapter => 'sqlite3',
-	:database => 'foo.sqlite3'
-	)
+require 'pry'
 
 client = Twitter::Streaming::Client.new do |config|
 	config.consumer_key        = ENV['CONSUMER_KEY']
@@ -18,28 +14,38 @@ client = Twitter::Streaming::Client.new do |config|
 end
 
 keys = ["PSG", "obama", "justin bieber"]
-vote1 = Vote.find_by_id(167)
-vote1.save
+
 counter1 = 0
-vote2 = Vote.find_by_id(168)
-vote2.save
 counter2 = 0
-vote3 = Vote.find_by_id(169)
-vote3.save
 counter3 = 0
 
-client.filter(:track => "PSG, obama, justin bieber" ) do |object|
-	if object.text.include?"obama"
-		counter1 += 1
-		vote1.counter = counter1
-		vote1.save
-	elsif object.text.include?"PSG"
-		counter2 += 1
-		vote2.counter = counter2
-		vote2.save
-	elsif object.text.include?"justin bieber"
-		counter3 += 1
-		vote3.counter = counter3
-		vote3.save
+systeme_vote = Vote
+systeme_vote.set "demarrer", "off"
+
+vote1 = Vote
+vote1.set "PSG", 0
+vote2 = Vote
+vote2.set "obama", 0
+vote3 = Vote
+vote3.set "justin bieber", 0
+
+loop do
+	if systeme_vote.get("demarrer") == "on"
+		client.filter(:track => "PSG, obama, justin bieber" ) do |object|
+			if object.text.include?"PSG"
+				counter1 += 1
+				vote1.set "PSG", "#{counter1}"
+			elsif object.text.include?"obama"
+				counter2 += 1
+				vote2.set "obama", "#{counter2}"
+			elsif object.text.include?"justin bieber"
+				counter3 += 1
+				vote3.set "justin bieber", "#{counter3}"
+			end
+			if systeme_vote.get("demarrer") == "off"
+				break
+			end
+		end
+		sleep(5)
 	end
 end

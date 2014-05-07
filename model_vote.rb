@@ -1,4 +1,3 @@
-require "sinatra/activerecord"
+require 'redis'
 
-class Vote < ActiveRecord::Base
-end
+Vote = Redis.new
