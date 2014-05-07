@@ -102,3 +102,5 @@ post '/arreter_vote' do
 end
 
 #gem forman
+
+#cette ligne sert uniquement de test et peut être supprimé n'importe quand
