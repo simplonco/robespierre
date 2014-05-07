@@ -1,3 +1,4 @@
+#pour afficher le fil twitter du robot qui sera sur la page index
 require 'twitter'
 require './model_tweet'
 require 'sinatra/activerecord'

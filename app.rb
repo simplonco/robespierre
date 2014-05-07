@@ -18,8 +18,7 @@ end
 class Track < ActiveRecord::Base
 	def self.destroy_from_title(title)
 		`rm ./public/tracks/#{title}.mp3`
-		# TODO destroy mp3 file
-		#regarder les fileutils ruby
+		#regarder les fileutils ruby pour supprimer en ruby plutôt que de rentrer dans le schell
 		Track.find_by_title(title).destroy
 	end
 end
@@ -36,7 +35,7 @@ get '/' do
 	erb :index
 end
 
-post '/' do #avec tts
+post '/' do #avec tts => pour envoyer des éléments des blocs tweet et TTS vers le player audio
 	input = params[:input] || params[:tweet].to_s
 	input = input.gsub("&", "et ").
 	gsub("@", "at ").
@@ -97,19 +96,18 @@ post "/remettre_a_zero" do
 	redirect to '/'
 end
 
-post '/arduino' do
+post '/arduino' do #test
 	arduino_controller = ArduinoControl.new(" blabla")
 	arduino_controller.blink_ten_times(1.0)
 end
 
-post '/Usain_Bolt' do
-
+post '/Usain_Bolt' do #fonctionnalité en cours de dévelloppement. Pour
+					  #actionner les mouvement du robot à partir de l'app.
+					  #l'app enverra une requête à un serveur qui selon la requête
+					  #enverra diférentes instructions aux cerveaux moteurs
 	`ping brasgauche.com`
 	`ping brasdroit.com`
 	`ping tete.com`
 	`ping wwww.lemonde.fr`
 	erb :index
 end
-
-#gem forman
-#cette ligne sert uniquement de test et peut être supprimé n'importe quand

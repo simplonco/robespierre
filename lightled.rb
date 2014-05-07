@@ -1,3 +1,4 @@
+#test pour faire fonctionner un arduino à partir de l'app
 require 'arduino_firmata'
 
 class ArduinoControl
