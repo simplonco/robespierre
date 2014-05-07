@@ -10,13 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140424124343) do
+ActiveRecord::Schema.define(version: 20140506123456789) do
 
   create_table "tracks", force: true do |t|
     t.string  "title"
     t.string  "lien"
     t.integer "position"
   end
+
+  add_index "tracks", ["position"], name: "index_tracks_on_position"
 
   create_table "tweets", force: true do |t|
     t.string "author_name"

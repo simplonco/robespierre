@@ -1,0 +1,23 @@
+= tts
+
+Using the Google Translate service as the speech engine, this gem generates a .mp3 voice file from any given string.
+
+== Usage
+		 require 'tts'
+     # Will download "Hello World!.mp3" to your current directory
+     # Supported languages: ["zh", "en", "it", "fr"] 
+     "Hello World!".to_file "en"
+ 
+     # i18n
+     "人民代表代表人民".to_file "zh"
+
+     # Save the file to a specific location
+     "Light rain with highs of 5 degrees".to_file "en", "~/weather.mp3"
+
+     # Supports large text files, as the gem will batch up the requests to Google (as each request max 100 chars)
+     text = "People living on the east coast of England have been warned to stay away from their homes because of further high tides expected later. The tidal surge that hit the UK is said to have been the worst for 60 years, with thousands abandoning their homes."
+     text.to_file "en"
+
+== Copyright
+
+Copyright (c) 2011 Yiling Cao / Charlie Revett. Check LICENSE.txt
