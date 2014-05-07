@@ -27,23 +27,22 @@ end
 enable :sessions #permet de stocker une variable dans une session et de pouvoir l'utiliser partout dans l'app
 
 get '/' do
-	redis = Redis.new
-
+	@redis = Redis.new
 	@new_array = []
 
-	redis.keys("robonova:tweet:*").each do |x|
-		@new_array.push(JSON.parse(redis.get(x)))
+	@redis.keys("robonova:tweet:*").each do |x|
+		@new_array.push(JSON.parse(@redis.get(x)))
 	end
 	erb :index
 end
 
-post '/' do #avec tts	
-	input = params[:input]
+post '/' do #avec tts
+	input = params[:input] || params[:tweet].to_s
 	input = input.gsub("&", "et ").
-	              gsub("@", "at ").
-	              gsub("#", "hachetague").
-	              gsub(/[$°_\"{}\]\[`~&+,:;=?@#|'<>.^*()%!-]/, "")
-	 if input.empty?
+	gsub("@", "at ").
+	gsub("#", "hachetague").
+	gsub(/[$°_\"{}\]\[`~&+,:;=?@#|'<>.^*()%!-]/, "")
+	if input.empty?
 	else
 		input.to_file "fr", "public/tracks/#{input[0..57]}.mp3"
 		new_track = Track.new
@@ -54,17 +53,9 @@ post '/' do #avec tts
 	redirect to ('/')
 end
 
- get '/2' do
- 	@user_timeline = client.user_timeline
- 	erb :page2
- end
-
- post '/2' do
- 	redirect to ('/2')
- end
-
 post '/search' do #pour chercher un mot ou hashtag sur twitter
-	@search = client.search("#{params[:input]}")
+	@redis = Redis.new
+	@search = client.search("#{params[:input]}", :result_type => "recent").take(ENV['TWEET_SEARCH_LIMIT'].to_i)
 	erb :search_page
 end
 
@@ -84,23 +75,41 @@ post '/sort_url' do
 	end.to_json
 end
 
+post '/remove_track' do
+	Track.destroy_from_title(params[:name])
+end
+
+post '/vote' do
+	redis = Redis.new
+	if redis.get("demarrer") == "off"
+		redis.set "demarrer", "on"
+	else
+		redis.set "demarrer", "off"
+	end
+	redirect to '/'
+end
+
+post "/remettre_a_zero" do
+	redis  =Redis.new
+	redis.set "PSG", 0
+	redis.set "obama", 0
+	redis.set "justin bieber", 0
+	redirect to '/'
+end
+
 post '/arduino' do
 	arduino_controller = ArduinoControl.new(" blabla")
 	arduino_controller.blink_ten_times(1.0)
 end
 
-post '/remove_track' do
-	Track.destroy_from_title(params[:name])
-end
+post '/Usain_Bolt' do
 
-post '/demarrer_vote' do
-	`nohup ruby systeme_de_vote.rb &`
-	erb :index	
-end
-
-post '/arreter_vote' do 
+	`ping brasgauche.com`
+	`ping brasdroit.com`
+	`ping tete.com`
+	`ping wwww.lemonde.fr`
+	erb :index
 end
 
 #gem forman
-
 #cette ligne sert uniquement de test et peut être supprimé n'importe quand

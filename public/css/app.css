@@ -167,6 +167,7 @@ h3 {
 ------*/
 
 #conteneur_vote {
+	height: 200px;
 	padding: 0px;
 	border-bottom: 1px #B9B9B9 solid;
 }
