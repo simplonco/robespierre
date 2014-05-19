@@ -6,3 +6,5 @@
 
 # Ignore .env
 .env
+/vendor
+*.sqlite3

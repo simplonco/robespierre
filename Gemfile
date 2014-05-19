@@ -15,3 +15,7 @@ gem 'redis'
 gem 'coffee-rails'
 
 gem 'arduino_firmata'
+
+group :development do
+  gem 'shotgun'
+end

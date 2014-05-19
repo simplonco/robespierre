@@ -1,0 +1,4 @@
+CONSUMER_KEY=<votre consumer_key>
+CONSUMER_SECRET=<votre consumer_secret>
+ACCESS_TOKEN=<votre access_token>
+ACCESS_TOKEN_SECRET=<votre access_token_secret>
