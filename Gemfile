@@ -11,9 +11,6 @@ gem 'twitter'
 gem 'dotenv'
 gem 'redis'
 
-#pour faire fonctionner jquery-ui
-gem 'coffee-rails'
-
 gem 'arduino_firmata'
 
 group :development do
