@@ -5,6 +5,7 @@ Dotenv.load
 require './model_vote'
 require './model_tweet'
 require './model_redis'
+require './methods.rb'
 
 set :database, "sqlite3:///foo.sqlite3"
 
@@ -28,7 +29,6 @@ enable :sessions #permet de stocker une variable dans une session et de pouvoir 
 get '/' do
 	@redis = Redis.new
 	@new_array = []
-
 	@redis.keys("robonova:tweet:*").each do |x|
 		@new_array.push(JSON.parse(@redis.get(x)))
 	end
@@ -37,13 +37,8 @@ end
 
 post '/' do #avec tts => pour envoyer des éléments des blocs tweet et TTS vers le player audio
 	input = params[:input] || params[:tweet].to_s
-	input = input.gsub("&", "et ").
-	gsub("@", "at ").
-	gsub("#", "hachetague").
-	gsub(/[$°_\"{}\]\[`~&+,:;=?@#|'<>.^*()%!-]/, "")
-	if input.empty?
-	else
-		input.to_file "fr", "public/tracks/#{input[0..57]}.mp3"
+	if input != nil
+		no_special_caracters(input).to_file "fr", "public/tracks/#{input[0..57]}.mp3"
 		new_track = Track.new
 		new_track.title = input[0..57]
 		new_track.lien = "../tracks/#{input[0..57]}.mp3"
@@ -111,3 +106,8 @@ post '/Usain_Bolt' do #fonctionnalité en cours de dévelloppement. Pour
 	`ping wwww.lemonde.fr`
 	erb :index
 end
+
+
+#penser à faire un player voix du robot pour que les actions n'empiètent
+#pas sur la playlist de voix
+
