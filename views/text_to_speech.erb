@@ -3,13 +3,24 @@
     <div class="panel-heading">
       <h3 class="panel-title">Text To Speech</h3>
     </div>
-    <div id="tts_panel_body" class="panel-body">
-      <form method="post" action="/">
+    <form id="hey" method="post" action="/">
+      <div id="tts_panel_body" class="panel-body">
         <textarea id="tts_text_area" class="form-control" name="input" type="text" placeholder="type your text" rows="15"></textarea>
-      </div><!--ferme le 1er panel-body-->
+      </div>
       <div class="panel-body">
-        <button id="play" class="btn btn-default" type="submit" value="Submit">Envoyer</button>
-      </form>
-    </div><!--ferme le 2ème panel-body-->
+        <input id="play" class="btn btn-default" type="submit" value="Submit">
+        <!-- <button id="play" class="btn btn-default" type="submit" value="Submit">Envoyer</button> -->
+      </div>
+    </form>
   </div>
 </div>
+
+<script type="text/javascript">
+  document.getElementById("tts_text_area").onkeypress = function send(e) {
+  e = e || event;
+  if (e.keyCode == 13) {
+    document.forms["hey"].submit();
+  };
+  return true;
+ };
+</script>
