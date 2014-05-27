@@ -59,10 +59,10 @@ post '/update_statut' do #pour poster un tweet
 end
 
 post '/sort_url' do
-	params[:tracks].each do |track|
-		index = track[0].to_i
-		track_name = track[1][:title]
-		Track.update_all({position: index+1}, {title: track_name})
+	puts params[:tracks]
+	params[:tracks].each do |index, track|
+		puts "index: #{index} track: #{track} title: #{track[:title]}"
+		Track.where({position: index.to_i + 1}).update_all({title: track[:title]})
 	end
 	Track.order("position").map do |track|
 		{title: track.title, mp3: track.lien}
@@ -84,7 +84,7 @@ post '/vote' do
 end
 
 post "/remettre_a_zero" do
-	redis  =Redis.new
+	redis  = Redis.new
 	redis.set "PSG", 0
 	redis.set "obama", 0
 	redis.set "justin bieber", 0
@@ -107,7 +107,5 @@ post '/Usain_Bolt' do #fonctionnalité en cours de dévelloppement. Pour
 	erb :index
 end
 
-
 #penser à faire un player voix du robot pour que les actions n'empiètent
 #pas sur la playlist de voix
-
