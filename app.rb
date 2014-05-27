@@ -83,12 +83,22 @@ post '/vote' do
 	redirect to '/'
 end
 
+get "/update_vote" do
+	redis = Redis.new
+	if redis.get("demarrer") == "off"
+		"stop polling".to_json
+	else
+		{vote_1: redis.get('PSG'), 
+			vote_2: redis.get('obama'), 
+			vote_3: redis.get('justin bieber')}.to_json
+	end
+end
+
 post "/remettre_a_zero" do
 	redis  = Redis.new
 	redis.set "PSG", 0
 	redis.set "obama", 0
 	redis.set "justin bieber", 0
-	redirect to '/'
 end
 
 post '/arduino' do #test
@@ -100,12 +110,12 @@ post '/Usain_Bolt' do #fonctionnalité en cours de dévelloppement. Pour
 					  #actionner les mouvement du robot à partir de l'app.
 					  #l'app enverra une requête à un serveur qui selon la requête
 					  #enverra diférentes instructions aux cerveaux moteurs
-	`ping brasgauche.com`
-	`ping brasdroit.com`
-	`ping tete.com`
-	`ping wwww.lemonde.fr`
-	erb :index
-end
+					  `ping brasgauche.com`
+					  `ping brasdroit.com`
+					  `ping tete.com`
+					  `ping wwww.lemonde.fr`
+					  erb :index
+					end
 
 #penser à faire un player voix du robot pour que les actions n'empiètent
 #pas sur la playlist de voix

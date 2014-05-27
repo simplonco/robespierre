@@ -33,12 +33,15 @@ loop do
 	if systeme_vote.get("demarrer") == "on"
 		client.filter(:track => "PSG, obama, justin bieber" ) do |object|
 			if object.text.include?"PSG"
+				puts "PSG +1"
 				counter1 += 1
 				vote1.set "PSG", "#{counter1}"
 			elsif object.text.include?"obama"
+				puts "obama +1"
 				counter2 += 1
 				vote2.set "obama", "#{counter2}"
 			elsif object.text.include?"justin bieber"
+				puts "justin bridou +1"
 				counter3 += 1
 				vote3.set "justin bieber", "#{counter3}"
 			end
