@@ -22,6 +22,22 @@ class Track < ActiveRecord::Base
 		#regarder les fileutils ruby pour supprimer en ruby plutôt que de rentrer dans le schell
 		Track.find_by_title(title).destroy
 	end
+
+	def self.create_track(title)
+		title = no_special_caracters(title)
+		title.to_file("fr", "public/tracks/#{title[0..57]}.mp3")
+		new_track = Track.new(title: title, lien: "/tracks/#{title}")
+		new_track.save
+	end
+
+	private
+	
+	def self.no_special_caracters(input)
+		input.gsub("&", "et ").
+			gsub("@", "at ").
+			gsub("#", "hachetague").
+			gsub(/[$°_\"{}\]\[`~&+,:;=?@#|'<>.^*()%!-]/, "")
+	end
 end
 
 enable :sessions #permet de stocker une variable dans une session et de pouvoir l'utiliser partout dans l'app
@@ -38,17 +54,9 @@ end
 post '/' do #avec tts => pour envoyer des éléments des blocs tweet et TTS vers le player audio
 	input = params[:input] || params[:tweet].to_s
 	if input
-		no_special_caracters(input).to_file "fr", "public/tracks/#{input[0..57]}.mp3"
-		create_track(input[0..57])
+		Track.create_track(input[0..57])
 	end
 	redirect to ('/')
-end
-
-def create_track(title)
-	new_track = Track.new
-	new_track.title = title
-	new_track.lien = "/tracks/#{title}"
-	new_track.save
 end
 
 post '/upload' do
@@ -56,7 +64,7 @@ post '/upload' do
 		File.open("public/tracks/#{params[:file][:filename]}", "wb") do |f|
 	    	f.write(params[:file][:tempfile].read)
 	  	end
-		create_track(params[:file][:filename])
+		Track.create_track(params[:file][:filename])
 	end
 	redirect to ('/')
 end
@@ -73,9 +81,7 @@ post '/update_statut' do #pour poster un tweet
 end
 
 post '/sort_url' do
-	puts params[:tracks]
 	params[:tracks].each do |index, track|
-		puts "index: #{index} track: #{track} title: #{track[:title]}"
 		Track.where({position: index.to_i + 1}).update_all({title: track[:title]})
 	end
 	Track.order("position").map do |track|
