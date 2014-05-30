@@ -8,3 +8,5 @@
 .env
 /vendor
 *.sqlite3
+/public/tracks
+dump.rdb

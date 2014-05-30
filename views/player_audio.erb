@@ -27,7 +27,6 @@ $(document).ready(function(){
 	});
 
 });
-
 </script>
 
 <div class="col-md-3">
@@ -37,6 +36,10 @@ $(document).ready(function(){
 			<h3 class="panel-title">Player Audio</h3>
 		</div>
 
+		<form method="post" action="/upload" enctype='multipart/form-data'> <!--multipart permet de dire au formulaire qu'il doit s'attendre à recevoir des fichiers binaires -->
+			<input type="file" name="file">
+			<input type="submit" >
+		</form>
 
 
 		<div id="jp_container_N" class="jp-video jp-video-270p" >
@@ -93,7 +96,7 @@ $(document).ready(function(){
 					<input type="checkbox" class="to-my-playlist"/>
 					<span class="my-song" data-lien="<%= track.lien %>"><%= track.title %></span>
 					<a href="#" class="remove-my-song pull-right">x</a>
-				<hr class="hr_track" />
+					<hr class="hr_track" />
 				</li>
 				<% end %>
 			</ul>

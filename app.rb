@@ -37,12 +37,26 @@ end
 
 post '/' do #avec tts => pour envoyer des éléments des blocs tweet et TTS vers le player audio
 	input = params[:input] || params[:tweet].to_s
-	if input != nil
+	if input
 		no_special_caracters(input).to_file "fr", "public/tracks/#{input[0..57]}.mp3"
-		new_track = Track.new
-		new_track.title = input[0..57]
-		new_track.lien = "../tracks/#{input[0..57]}.mp3"
-		new_track.save
+		create_track(input[0..57])
+	end
+	redirect to ('/')
+end
+
+def create_track(title)
+	new_track = Track.new
+	new_track.title = title
+	new_track.lien = "/tracks/#{title}"
+	new_track.save
+end
+
+post '/upload' do
+	if params[:file][:type].include?('audio')
+		File.open("public/tracks/#{params[:file][:filename]}", "wb") do |f|
+	    	f.write(params[:file][:tempfile].read)
+	  	end
+		create_track(params[:file][:filename])
 	end
 	redirect to ('/')
 end
