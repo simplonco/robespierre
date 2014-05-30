@@ -30,7 +30,7 @@ enable :sessions #permet de stocker une variable dans une session et de pouvoir 
 get '/' do
   @redis = Redis.new
   @tweets = tweets(@redis)
-  erb :index
+  erb :twitter
 end
 
 get '/fresh_tweets' do
