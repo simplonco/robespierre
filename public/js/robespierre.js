@@ -29,8 +29,16 @@ refresh_votes = function(){
 	});
 }
 
+refreshTweets = function() {
+	$("#conteneur_tweet").load("/fresh_tweets", function() {
+		setTimeout(refreshTweets,5000) 
+	})
+} 
+
 $(document).ready(function(){
 	rebuildPlaylist()
+
+	refreshTweets()
 
 	$("#jp_container_N .jp-playlist").on("click", "a.jp-playlist-item-remove", function(){
 		var name = $(this).next('.jp-playlist-item').text()

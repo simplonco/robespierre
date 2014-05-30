@@ -1,0 +1,9 @@
+<% @tweets.each do |tweet| %>
+<p>
+	<input type="checkbox" name="tweet[]" id="tweet" value="<%= tweet["status"] %>"/>
+	<img src='<%= tweet["profile_image_url"] %>' alt="profile_pic", title="profile_pic">
+	<i id="user_name"><%= tweet["author_name"] %></i>:
+	<label for="tweet"><%= tweet["status"]  %></label>
+	<hr class="hr_tweet" />
+</p>
+<% end %>
