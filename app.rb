@@ -84,6 +84,7 @@ end
 post '/vote' do
   redis = Redis.new
   if redis.get("demarrer") == "off"
+    remettre_a_zero(redis)
     redis.set "demarrer", "on"
     return 'Arrêter'
   else
@@ -103,11 +104,15 @@ get "/update_vote" do
   end
 end
 
-post "/remettre_a_zero" do
-  redis  = Redis.new
+def remettre_a_zero(redis)
   redis.set "PSG", 0
   redis.set "obama", 0
   redis.set "justin bieber", 0
+end
+
+post "/remettre_a_zero" do
+  redis = Redis.new
+  remettre_a_zero(redis)
 end
 
 post '/arduino' do #test

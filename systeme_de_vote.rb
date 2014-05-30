@@ -41,7 +41,7 @@ loop do
 				counter2 += 1
 				vote2.set "obama", "#{counter2}"
 			elsif object.text.include?"justin bieber"
-				puts "justin bridou +1"
+				puts "justin bieber +1"
 				counter3 += 1
 				vote3.set "justin bieber", "#{counter3}"
 			end

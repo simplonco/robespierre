@@ -18,15 +18,28 @@
 				<p class="tableau_votes titre_colonnes">Morceaux</p>
 				<hr class="hr_titre_vote">
 				<div class="tableau_votes">
-					<%= @redis.keys("PSG")[0] %>
+					<% if @redis.get("demarrer") == "off" %>
+						<input type="text" class="songhashtag" size="10" value="<%= @redis.keys("PSG")[0] %>"/>
+					<% else %>
+						<input type="text" readonly="true" class="songhashtag" size="10" value="<%= @redis.keys("PSG")[0] %>"/>
+					<% end %>
 				</div>
 				<hr class="hr_vote">
 				<div class="tableau_votes">
-					<%= @redis.keys("obama")[0] %>
+					<% if @redis.get("demarrer") == "off" %>
+						<input type="text" class="songhashtag" size="10" value="<%= @redis.keys("obama")[0] %>"/>
+					<% else %>
+						<input type="text" readonly="true" class="songhashtag" size="10" value="<%= @redis.keys("obama")[0] %>"/>
+					<% end %>
+
 				</div>
 				<hr class="hr_vote">
 				<div class="tableau_votes dernieres_div_tableau">
-					<%= @redis.keys("justin bieber")[0] %>
+					<% if @redis.get("demarrer") == "off" %>
+						<input type="text" class="songhashtag" size="10" value="<%= @redis.keys("justin bieber")[0] %>"/>
+					<% else %>
+						<input type="text" class="songhashtag" readonly="true" size="10" value="<%= @redis.keys("justin bieber")[0] %>"/>
+					<% end %>
 				</div>
 			</div>
 			<div class="colonne col-md-6">

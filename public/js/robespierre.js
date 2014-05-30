@@ -14,6 +14,13 @@ rebuildPlaylist = function() {
 	console.log("la fonction rebuildPlaylist est ok")
 }
 
+resetVotes = function(){
+	console.log('dand reset votes')
+	$('#vote_1').text(0)
+	$('#vote_2').text(0)
+	$('#vote_3').text(0)
+}
+
 refreshVotes = function(){
 	console.log('dans refresh votes')
 	$.get('/update_vote', function(data) {
@@ -77,13 +84,18 @@ $(document).ready(function(){
 		event.preventDefault()
 		$.post('/vote', function(data) {
 			$('#stop_and_go_votes').text(data)
+			$('.songhashtag').removeAttr('readonly')
 			$('#stop_and_go_votes').toggleClass("btn-success")
 			$('#stop_and_go_votes').toggleClass("btn-danger")
-			if(data == "Arrêter") {	refreshVotes() }
+			if(data == "Arrêter") {	
+				$('.songhashtag').attr('readonly', 'true')
+				resetVotes()
+				refreshVotes() 
+			}
 		})
 		console.log('done')
 	})
-	
+
 	if($('#stop_and_go_votes').hasClass('btn-danger')) {
 		console.log('vote en cours')
 		refreshVotes()
