@@ -107,10 +107,11 @@ post '/vote' do
   redis = Redis.new
   if redis.get("demarrer") == "off"
     redis.set "demarrer", "on"
+    return 'Arrêter'
   else
     redis.set "demarrer", "off"
+    return 'Démarrer'
   end
-  redirect to '/'
 end
 
 get "/update_vote" do

@@ -14,7 +14,7 @@ rebuildPlaylist = function() {
 	console.log("la fonction rebuildPlaylist est ok")
 }
 
-refresh_votes = function(){
+refreshVotes = function(){
 	console.log('dans refresh votes')
 	$.get('/update_vote', function(data) {
 		votes = JSON.parse(data)
@@ -24,7 +24,7 @@ refresh_votes = function(){
 			$('#vote_1').text(votes.vote_1)
 			$('#vote_2').text(votes.vote_2)
 			$('#vote_3').text(votes.vote_3)
-			setTimeout(refresh_votes,5000)
+			setTimeout(refreshVotes,5000)
 		}
 	});
 }
@@ -75,24 +75,20 @@ $(document).ready(function(){
 
 	$('#stop_and_go_votes').on('click', function(event) { 
 		event.preventDefault()
-		if($(this).hasClass('btn-success')) {
-			$.post('/vote', {demarrer: "on"}, function() {
-				$('#stop_and_go_votes').text('Arrêter')
-				$('#stop_and_go_votes').removeClass("btn-success")
-				$('#stop_and_go_votes').addClass("btn-danger")
-				console.log('vote started')
-				refresh_votes() 
-			})
-		} else {
-			$.post('/vote', {demarrer: "off"}, function() {
-				$('#stop_and_go_votes').text('Démarrer')
-				$('#stop_and_go_votes').removeClass("btn-danger")
-				$('#stop_and_go_votes').addClass("btn-success")
-				console.log('vote stopped')
-			})
-		}
+		$.post('/vote', function(data) {
+			$('#stop_and_go_votes').text(data)
+			$('#stop_and_go_votes').toggleClass("btn-success")
+			$('#stop_and_go_votes').toggleClass("btn-danger")
+			if(data == "Arrêter") {	refreshVotes() }
+		})
 		console.log('done')
 	})
+	
+	if($('#stop_and_go_votes').hasClass('btn-danger')) {
+		console.log('vote en cours')
+		refreshVotes()
+	} 
+
 
 	$("#remise_a_zero").on('click', function(event) {
 		$.post("/remettre_a_zero", function(){
