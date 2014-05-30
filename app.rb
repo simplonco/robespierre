@@ -6,6 +6,7 @@ require './model_vote'
 require './model_tweet'
 require './model_redis'
 require './methods.rb'
+require './track.rb'
 
 set :database, "sqlite3:///foo.sqlite3"
 
@@ -16,28 +17,12 @@ client = Twitter::REST::Client.new do |config|
   config.access_token_secret = ENV['ACCESS_TOKEN_SECRET']
 end
 
-class Track < ActiveRecord::Base
-  def self.destroy_from_title(title)
-    `rm ./public/tracks/#{title}.mp3`
-    #regarder les fileutils ruby pour supprimer en ruby plutôt que de rentrer dans le schell
-    Track.find_by_title(title).destroy
+def tweets(redis)
+  tweets = []
+  redis.keys("robonova:tweet:*").each do |x|
+    tweets.push(JSON.parse(redis.get(x)))
   end
-
-  def self.create_track(title)
-    title = no_special_caracters(title)
-    title.to_file("fr", "public/tracks/#{title[0..57]}.mp3")
-    new_track = Track.new(title: title, lien: "/tracks/#{title}")
-    new_track.save
-  end
-
-  private
-  
-  def self.no_special_caracters(input)
-    input.gsub("&", "et ").
-      gsub("@", "at ").
-      gsub("#", "hachetague").
-      gsub(/[$°_\"{}\]\[`~&+,:;=?@#|'<>.^*()%!-]/, "")
-  end
+  tweets
 end
 
 enable :sessions #permet de stocker une variable dans une session et de pouvoir l'utiliser partout dans l'app
@@ -48,13 +33,6 @@ get '/' do
   erb :index
 end
 
-def tweets(redis)
-  tweets = []
-  redis.keys("robonova:tweet:*").each do |x|
-    tweets.push(JSON.parse(redis.get(x)))
-  end
-  tweets
-end
 get '/fresh_tweets' do
   @redis = Redis.new
   @tweets = tweets(@redis)
@@ -122,31 +100,33 @@ get "/update_vote" do
     {vote_1: redis.get('PSG'), 
       vote_2: redis.get('obama'), 
       vote_3: redis.get('justin bieber')}.to_json
-    end
   end
+end
 
-  post "/remettre_a_zero" do
-    redis  = Redis.new
-    redis.set "PSG", 0
-    redis.set "obama", 0
-    redis.set "justin bieber", 0
-  end
+post "/remettre_a_zero" do
+  redis  = Redis.new
+  redis.set "PSG", 0
+  redis.set "obama", 0
+  redis.set "justin bieber", 0
+end
 
 post '/arduino' do #test
   arduino_controller = ArduinoControl.new(" blabla")
   arduino_controller.blink_ten_times(1.0)
 end
 
-post '/Usain_Bolt' do #fonctionnalité en cours de dévelloppement. Pour
-            #actionner les mouvement du robot à partir de l'app.
-            #l'app enverra une requête à un serveur qui selon la requête
-            #enverra diférentes instructions aux cerveaux moteurs
-            `ping brasgauche.com`
-            `ping brasdroit.com`
-            `ping tete.com`
-            `ping wwww.lemonde.fr`
-            erb :index
-          end
+post '/Usain_Bolt' do 
+  puts `ls -l`
+  #fonctionnalité en cours de dévelloppement. Pour
+  #actionner les mouvement du robot à partir de l'app.
+  #l'app enverra une requête à un serveur qui selon la requête
+  #enverra diférentes instructions aux cerveaux moteurs
+  #`ping brasgauche.com`
+  #`ping brasdroit.com`
+  #`ping tete.com`
+  #`ping wwww.lemonde.fr`
+  erb :index
+end
 
 #penser à faire un player voix du robot pour que les actions n'empiètent
 #pas sur la playlist de voix
