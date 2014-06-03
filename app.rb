@@ -5,7 +5,6 @@ Dotenv.load
 require './model_vote'
 require './model_tweet'
 require './model_redis'
-require './methods.rb'
 require './track.rb'
 
 set :database, "sqlite3:///foo.sqlite3"
@@ -25,6 +24,12 @@ def tweets(redis)
   tweets
 end
 
+def remettre_a_zero(redis)
+  redis.set "PSG", 0
+  redis.set "obama", 0
+  redis.set "justin bieber", 0
+end
+
 enable :sessions #permet de stocker une variable dans une session et de pouvoir l'utiliser partout dans l'app
 
 get '/' do
@@ -42,7 +47,7 @@ end
 post '/' do #avec tts => pour envoyer des éléments des blocs tweet et TTS vers le player audio
   input = params[:input] || params[:tweet].to_s
   if input
-    Track.create_track(input[0..57])
+    Track.create_track(input)
   end
   redirect to ('/')
 end
@@ -82,6 +87,8 @@ post '/remove_track' do
 end
 
 post '/vote' do
+  #puts params.inspect
+  #TODO ici params[:hash1] params[:hash2] params[:hash3] pour le watcher
   redis = Redis.new
   if redis.get("demarrer") == "off"
     remettre_a_zero(redis)
@@ -102,12 +109,6 @@ get "/update_vote" do
       vote_2: redis.get('obama'), 
       vote_3: redis.get('justin bieber')}.to_json
   end
-end
-
-def remettre_a_zero(redis)
-  redis.set "PSG", 0
-  redis.set "obama", 0
-  redis.set "justin bieber", 0
 end
 
 post "/remettre_a_zero" do

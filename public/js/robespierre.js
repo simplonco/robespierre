@@ -49,7 +49,6 @@ $(document).ready(function(){
 
 	$("#jp_container_N .jp-playlist").on("click", "a.jp-playlist-item-remove", function(){
 		var name = $(this).next('.jp-playlist-item').text()
-
 		$.post("/remove_track", {name: name}, function() {console.log('ok destroy')
 		})
 	})
@@ -82,7 +81,11 @@ $(document).ready(function(){
 
 	$('#stop_and_go_votes').on('click', function(event) { 
 		event.preventDefault()
-		$.post('/vote', function(data) {
+		data = {hash1: $('#hash1').val(), 
+				hash2: $('#hash2').val(), 
+				hash3: $('#hash3').val()}
+		console.log(data)
+		$.post('/vote', data, function(data) {
 			$('#stop_and_go_votes').text(data)
 			$('.songhashtag').removeAttr('readonly')
 			$('#stop_and_go_votes').toggleClass("btn-success")
