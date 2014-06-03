@@ -97,6 +97,7 @@ h3 {
 	padding-left: 20px;
 	padding-right: 20px;
 	overflow: auto;
+
 }
 
 .hr_tweet {
@@ -170,6 +171,7 @@ h3 {
 	height: 200px;
 	padding: 0px;
 	border-bottom: 1px #B9B9B9 solid;
+	text-align: center;
 }
 
 .titre_colonnes {
@@ -203,4 +205,13 @@ h3 {
 
 .dernieres_div_tableau {
 	margin-bottom: 5px;
+}
+
+#table_vote {
+	margin-top: 10px;
+}
+
+th {
+	text-align: center;
+	padding-bottom: 7px;
 }
