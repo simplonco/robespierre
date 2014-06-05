@@ -45,13 +45,7 @@ refreshTweets = function() {
 $(document).ready(function(){
 	rebuildPlaylist()
 
-	refreshTweets()
-
-	$("#jp_container_N .jp-playlist").on("click", "a.jp-playlist-item-remove", function(){
-		var name = $(this).next('.jp-playlist-item').text()
-		$.post("/remove_track", {name: name}, function() {console.log('ok destroy')
-		})
-	})
+	// refreshTweets()
 
 	$("#my-tracks").sortable({
 		axis: "y",
@@ -71,19 +65,19 @@ $(document).ready(function(){
 	})
 
 	$('.remove-my-song').on('click', function(event) {
+		console.log('into remove my song')
 		event.preventDefault()
 		var name = $(this).prev('.my-song').text()
-		if($(this).parent('li').find('.to-my-playlist')) { 
-			rebuildPlaylist()
-			$.post('http://localhost:9393/remove_track', {name: name}, function() {console.log('ok destroy')})
-			$(this).parent().remove()}
-		})
+		$.post('/remove_track', {name: name})
+		$(this).parent().remove()
+		rebuildPlaylist()
+	})
 
 	$('#stop_and_go_votes').on('click', function(event) { 
 		event.preventDefault()
 		data = {hash1: $('#hash1').val(), 
-				hash2: $('#hash2').val(), 
-				hash3: $('#hash3').val()}
+		hash2: $('#hash2').val(), 
+		hash3: $('#hash3').val()}
 		console.log(data)
 		$.post('/vote', data, function(data) {
 			$('#stop_and_go_votes').text(data)
@@ -113,4 +107,4 @@ $(document).ready(function(){
 		})
 	})
 
-})
+});

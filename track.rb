@@ -2,8 +2,7 @@
 class Track < ActiveRecord::Base
 
   def self.destroy_from_title(title)
-    `rm ./public/tracks/#{title}.mp3`
-    #regarder les fileutils ruby pour supprimer en ruby plutôt que de rentrer dans le schell
+    FileUtils.rm("./public/tracks/#{title}.mp3")
     Track.find_by_title(title).destroy
   end
 
