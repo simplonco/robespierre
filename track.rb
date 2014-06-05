@@ -10,7 +10,7 @@ class Track < ActiveRecord::Base
     content = no_special_caracters(input)
     title = content[0..25]
     content.to_file("fr", "public/tracks/#{title}.mp3")
-    new_track = Track.new(title: title, lien: "/tracks/#{title}")
+    new_track = Track.new(title: title, lien: "/tracks/#{title}.mp3")
     new_track.save
   end
 

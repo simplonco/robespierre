@@ -4,14 +4,13 @@ getCurrentPlaylist = function() {
 		var $mySong = $(this).next('.my-song')
 		data.push({title: $mySong.text(), mp3: $mySong.data('lien')})
 	})
-	console.log("la fonction getCurrentPlaylist est ok")
+	console.log("get the current playlist")
 	return data
 }
 
 rebuildPlaylist = function() {
 	console.log('rebuild the playlist')
 	myPlaylist.setPlaylist(getCurrentPlaylist())
-	console.log("la fonction rebuildPlaylist est ok")
 }
 
 resetVotes = function(){
